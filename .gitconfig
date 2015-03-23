@@ -26,4 +26,4 @@
   status = true
 
 [push]
-  default = simple
+  default = upstream
