@@ -6,6 +6,31 @@
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
 
+;; indent whole buffer.
+;; http://emacsblog.org/2007/01/17/indent-whole-buffer/
+(defun iwb ()
+  "indent whole buffer"
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max)))
+(global-set-key (kbd "C-c i b") 'iwb)
+
+;; indent the selected region or the whole buffer
+;; http://emacsredux.com/blog/2013/03/27/indent-region-or-buffer/
+(defun indent-region-or-buffer ()
+  "Indent a region if selected, otherwise the whole buffer."
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+        (progn
+          (indent-region (region-beginning) (region-end))
+          (message "Indented selected region."))
+      (progn
+        (iwb)
+        (message "Indented buffer.")))))
+(global-set-key (kbd "C-c i r") 'indent-region-or-buffer)
+
 ;; Set up the keyboard so the delete key on both the regular keyboard
 ;; and the keypad delete the character under the cursor and to the right
 ;; under X, instead of the default, backspace behavior.
@@ -37,6 +62,7 @@
 (auto-compression-mode 1)
 
 ;;save the emacs session
+(setq-default desktop-restore-frames nil)
 (desktop-load-default)
 (setq history-length 250)
 (add-to-list 'desktop-globals-to-save 'file-name-history)
@@ -56,15 +82,11 @@
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 
 ;; Markdown major mode.
-(when (not (require 'markdown-mode nil t))
-  (package-install 'markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
-;; Add a default color-theme
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-charcoal-black)
+;; Add a default theme
+(load-theme 'whiteboard)
 
 ;; use spaces to indent files
 (setq-default indent-tabs-mode nil)
@@ -72,6 +94,3 @@
 
 ;; always end a file with a newline
 (setq require-final-newline t)
-
-;; stop at the end of the file, not just add lines
-(setq next-line-add-newlines nil)
