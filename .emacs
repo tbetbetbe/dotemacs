@@ -66,7 +66,6 @@
 (desktop-load-default)
 (setq history-length 250)
 (add-to-list 'desktop-globals-to-save 'file-name-history)
-(desktop-read)
 (setq desktop-enable t)
 
 ;; Turn on red highlighting for characters outside of the 80 char limit
@@ -94,3 +93,21 @@
 
 ;; always end a file with a newline
 (setq require-final-newline t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((encoding . utf-8)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; magit configuration
+;; https://raw.githubusercontent.com/magit/magit/next/Documentation/RelNotes/1.4.0.txt
+;;
+(setq magit-last-seen-setup-instructions "1.4.0")
+(setq magit-auto-revert-mode nil)
